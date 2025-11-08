@@ -408,7 +408,7 @@
     <nav class="sidebar" id="sidebar">
         <a href="#" class="nav-item" onclick="showSection('home')">🏠 Home</a>
         <a href="#" class="nav-item" onclick="showSection('statistics')">📊 Statistics</a>
-        <a href="#" class="nav-item" onclick="window.open('https://fireball-j60.pages.dev', '_blank')">🚀 Journey to 60</a>
+        <a href="#" class="nav-item" onclick="window.open('journey')">🚀 Journey to 60</a>
         <a href="#" class="nav-item" onclick="window.open('https://youtube.com/@FireballMC_YT', '_blank')">📺 YouTube</a>
         <a href="#" class="nav-item" onclick="window.open('https://reddit.com/r/bagstudios', '_blank')">🔥 Reddit</a>
     </nav>
@@ -454,7 +454,7 @@
             
             <div class="charts-container">
                 <div class="chart-card">
-                    <h3>Subscriber Growth</h3>
+                    <h3>Subscriber Goal</h3>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 75%;" id="subProgress"></div>
                     </div>
@@ -462,7 +462,7 @@
                 </div>
                 
                 <div class="chart-card">
-                    <h3>View Milestone</h3>
+                    <h3>View Goal</h3>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 60%;" id="viewProgress"></div>
                     </div>
@@ -502,8 +502,18 @@
                     <p>We can do it, Fireball Army!</p>
                 </div>
 
+                <div class="milestone">
+                    <h3>60 Subscribers</h3>
+                    <p>We can do it, Fireball Army!</p>
+                </div>
+
+                <div class="milestone">
+                    <h3>25,000 Views</h3>
+                    <p>We can do it, Fireball Army!</p>
+                </div>
+
                 <a href="https://fireball-j60.pages.dev" target="_blank" class="external-link">
-                    Visit Journey Page 🚀
+                    Visit the Journey to 60 Page 🚀
                 </a>
             </div>
         </section>
@@ -583,8 +593,9 @@
                     document.getElementById('videoCount').innerHTML = stats.videoCount;
                     
                     // Update progress bars
-                    const subPercentage = Math.min((parseInt(stats.subscriberCount) / 100000) * 100, 100);
-                    const viewPercentage = Math.min((parseInt(stats.viewCount) / 1000000) * 100, 100);
+                    const subPercentage = Math.min((parseInt(stats.subscriberCount) / 60) * 100, 100);
+                    const viewPercentage = Math.min((parseInt(stats.viewCount) / 25000) * 100, 100);
+
                     
                     document.getElementById('subProgress').style.width = subPercentage + '%';
                     document.getElementById('viewProgress').style.width = viewPercentage + '%';
