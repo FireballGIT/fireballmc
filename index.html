@@ -24,15 +24,13 @@
     .fire-title{font-size:3rem;margin-bottom:2rem;background:linear-gradient(45deg,var(--accent),var(--accent-light),#ff9a5a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;animation:titleBurn 3s infinite alternate;}
     @keyframes titleBurn{0%{text-shadow:0 0 10px var(--accent);}100%{text-shadow:0 0 40px var(--accent-light);}}
 
-    /* ====== DOUBLE NAVBAR (VIDEOS) ====== */
+    /* ====== VIDEOS SECTION ====== */
     .vid-top-nav{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
     .vid-top-nav button{background:transparent;border:2px solid var(--accent);color:var(--accent);padding:.5rem 1rem;border-radius:10px;cursor:pointer;transition:all .3s;}
     .vid-top-nav button.active{background:var(--accent);color:#fff;}
     .vid-sub-nav{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
     .vid-sub-nav button{background:transparent;border:1px solid var(--accent-light);color:var(--accent-light);padding:.4rem .8rem;border-radius:8px;cursor:pointer;transition:all .3s;font-size:.9rem;}
     .vid-sub-nav button.active{background:var(--accent-light);color:#1a0a00;}
-
-    /* ====== VIDEO GRID ====== */
     .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
     .video-card{background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(255,154,90,.1));border:2px solid var(--accent);border-radius:15px;padding:1rem;transition:transform .3s;}
     .video-card:hover{transform:translateY(-5px);}
@@ -59,6 +57,7 @@
       <li class="nav-item" data-section="journey">🚀 Journey to 60</li>
       <li class="nav-item" data-section="videos">🎥 Videos</li>
       <li class="nav-item"><a href="https://youtube.com/@FireballMC_YT" target="_blank" style="color:inherit;text-decoration:none;">📺 YouTube</a></li>
+      <li class="nav-item"><a href="https://reddit.com/r/bagstudios" target="_blank" style="color:inherit;text-decoration:none;">🤖 Reddit</a></li>
       <li class="nav-item"><a href="https://5a4feaa2.fireballmc.pages.dev/" target="_blank" style="color:inherit;text-decoration:none;">🔥 Journey Site</a></li>
     </ul>
   </nav>
@@ -153,8 +152,8 @@
     });
 
     // ====== YOUTUBE API (FAKE VALUES) ======
-    const API_KEY   = 'AIzaSyDMf_dA53j07Jr76SwIBhGPwAo_ISWYgRE';
-    const CHANNEL_ID= 'UCG2Amy2r9zcApNwAumUWmSQ';
+    const API_KEY   = 'AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz1234567'; // ← replace
+    const CHANNEL_ID= 'UCAbCdEfGhIjKlMnOpQrStUvW';              // ← replace
 
     let cachedSubs=0,cachedViews=0,cachedVideos=0;
 
@@ -184,18 +183,14 @@
       document.getElementById('journeyProgress').style.width=pct+'%';
     }
 
-    // ====== VIDEOS – FULL AUTOMATION ======
+    // ====== VIDEOS – AUTO-FETCH REAL CONTENT ======
     const vidTopNav=document.getElementById('vidTopNav');
     const vidSubNav=document.getElementById('vidSubNav');
     const videoGrid=document.getElementById('videoGrid');
     let currentTop='shorts',currentSub='popular';
 
     // caches
-    const cache={
-      shorts:{popular:[],new:[],old:[]},
-      videos:{popular:[],new:[],old:[]},
-      playlists:{popular:[],new:[],old:[]}
-    };
+    const cache={shorts:{popular:[],new:[],old:[]},videos:{popular:[],new:[],old:[]},playlists:{popular:[],new:[],old:[]}};
 
     async function fetchVideos(type,order){
       const url= type==='shorts'
@@ -221,15 +216,12 @@
     }
 
     async function loadAllVideos(){
-      // shorts
       cache.shorts.popular=await fetchVideos('shorts','viewCount');
       cache.shorts.new     =await fetchVideos('shorts','date');
       cache.shorts.old     =await fetchVideos('shorts','date'); // we’ll reverse later
-      // videos
       cache.videos.popular=await fetchVideos('videos','viewCount');
       cache.videos.new    =await fetchVideos('videos','date');
       cache.videos.old    =await fetchVideos('videos','date');
-      // playlists
       cache.playlists.popular=await fetchVideos('playlists','viewCount');
       cache.playlists.new    =await fetchVideos('playlists','date');
       cache.playlists.old    =await fetchVideos('playlists','date');
