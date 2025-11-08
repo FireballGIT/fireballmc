@@ -1,229 +1,498 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FireballMC Site</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FireballMC</title>
+  <style>
+    /* ====== CURSORS ====== */
+    * {
+      cursor: url('data:image/svg+xml;utf8,\
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">\
+          <circle cx="16" cy="16" r="12" fill="%23ff6b35" opacity="0.9"/>\
+          <circle cx="16" cy="12" r="4" fill="%23ffd166"/>\
+        </svg>') 16 16, auto;
+    }
+    a, button, .nav-item {
+      cursor: url('data:image/svg+xml;utf8,\
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">\
+          <circle cx="16" cy="16" r="12" fill="%23ff6b35" opacity="0.9"/>\
+          <circle cx="16" cy="12" r="4" fill="%23ffd166"/>\
+          <path d="M10 20l4 4 8-8" stroke="%23fff" stroke-width="2"/>\
+        </svg>') 16 16, pointer;
+    }
+
+    /* ====== BASE ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1a0a00 0%, #2d1300 50%, #1a0a00 100%);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+    }
+
+    /* ====== SIDEBAR ====== */
+    .sidebar {
+      width: 280px;
+      background: linear-gradient(180deg, #2d1300 0%, #1a0a00 100%);
+      padding: 2rem 0;
+      position: fixed;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      border-right: 2px solid #ff6b35;
+      box-shadow: 4px 0 20px rgba(255, 107, 53, 0.3);
+      z-index: 1000;
+    }
+    .logo h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(45deg, #ff6b35, #ffd166);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: flicker 2s infinite alternate;
+    }
+    @keyframes flicker {
+      0% { text-shadow: 0 0 10px #ff6b35; }
+      100% { text-shadow: 0 0 30px #ffd166; }
+    }
+    .nav-menu {
+      list-style: none;
+      padding: 0 1rem;
+    }
+    .nav-item {
+      position: relative;
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+    .nav-item:hover::before {
+      left: 100%;
+    }
+    .nav-item.active {
+      background: linear-gradient(135deg, #ff6b35, #ff9a5a);
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    }
+    .nav-item:hover {
+      background: rgba(255, 107, 53, 0.1);
+      transform: translateX(5px);
+    }
+    .flame-highlight {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.8) 0%, rgba(255, 154, 90, 0.4) 40%, transparent 70%);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .nav-item:hover .flame-highlight {
+      width: 120px;
+      height: 60px;
+      opacity: 1;
+      animation: flameDance 0.5s infinite alternate;
+    }
+    @keyframes flameDance {
+      0% { transform: translateX(-50%) scale(1); }
+      100% { transform: translateX(-50%) scale(1.1); }
+    }
+
+    /* ====== MAIN CONTENT ====== */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      position: relative;
+      min-height: 100vh;
+    }
+    .fire-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 94, 0, 0.8) 0%, rgba(255, 68, 0, 0.6) 50%, rgba(139, 0, 0, 0.8) 100%);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .fire-overlay.active {
+      opacity: 1;
+      animation: burnEffect 0.8s ease-out;
+    }
+    @keyframes burnEffect {
+      0% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 0; transform: scale(1); }
+    }
+    .content-section {
+      display: none;
+      padding: 3rem;
+      min-height: 100vh;
+      position: relative;
+    }
+    .content-section.active {
+      display: block;
+      animation: fadeInFire 0.8s ease-out;
+    }
+    @keyframes fadeInFire {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fire-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #ff6b35, #ffd166, #ff9a5a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      animation: titleBurn 3s infinite alternate;
+    }
+    @keyframes titleBurn {
+      0% { text-shadow: 0 0 10px #ff6b35; }
+      100% { text-shadow: 0 0 40px #ffd166; }
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 154, 90, 0.1));
+      border: 2px solid #ff6b35;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 107, 53, 0.2) 0%, transparent 70%);
+      animation: rotate 10s linear infinite;
+    }
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ff6b35;
+      text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+    }
+    .journey-progress {
+      margin: 3rem 0;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 30px;
+      background: rgba(255, 107, 53, 0.2);
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff6b35, #ffd166);
+      border-radius: 15px;
+      transition: width 1s ease;
+      position: relative;
+    }
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .milestones {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    .milestone {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+    .milestone.completed {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 154, 90, 0.2));
+      border: 2px solid #ff6b35;
+    }
+    .milestone.current {
+      background: linear-gradient(135deg, rgba(255, 215, 102, 0.2), rgba(255, 154, 90, 0.2));
+      border: 2px solid #ffd166;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .youtube-btn, .reddit-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #ff6b35, #ffd166);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .youtube-btn:hover, .reddit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+    }
+    .fire-effect {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .youtube-btn:hover .fire-effect, .reddit-btn:hover .fire-effect {
+      left: 100%;
+    }
+
+    /* ====== FLOATING EMBERS ====== */
+    .ember {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: #ff6b35;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      animation: floatEmber 6s linear infinite;
+    }
+    @keyframes floatEmber {
+      0% { transform: translateY(100vh) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+    }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .fire-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="logo">
-                <h1>🔥 FireballMC</h1>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item active" data-section="home">
-                    <span class="nav-icon">🏠</span>
-                    <span class="nav-text">Home</span>
-                    <div class="flame-highlight"></div>
-                </li>
-                <li class="nav-item" data-section="statistics">
-                    <span class="nav-icon">📊</span>
-                    <span class="nav-text">Statistics</span>
-                    <div class="flame-highlight"></div>
-                </li>
-                <li class="nav-item" data-section="journey">
-                    <span class="nav-icon">🚀</span>
-                    <span class="nav-text">Journey to 60</span>
-                    <div class="flame-highlight"></div>
-                </li>
-                <li class="nav-item" data-section="youtube">
-                    <span class="nav-icon"></span>
-                    <span class="nav-text">YouTube</span>
-                    <div class="flame-highlight"></div>
-                </li>
-                <li class="nav-item" data-section="reddit">
-                    <span class="nav-icon"></span>
-                    <span class="nav-text">Reddit</span>
-                    <div class="flame-highlight"></div>
-                </li>
-            </ul>
-        </nav>
+  <div class="container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="logo">
+        <h1>🔥 FireballMC</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item active" data-section="home">
+          <span>🏠</span><span>Home</span>
+          <div class="flame-highlight"></div>
+        </li>
+        <li class="nav-item" data-section="statistics">
+          <span>📊</span><span>Statistics</span>
+          <div class="flame-highlight"></div>
+        </li>
+        <li class="nav-item" data-section="journey">
+          <span>🚀</span><span>Journey to 60</span>
+          <div class="flame-highlight"></div>
+        </li>
+        <li class="nav-item" data-section="youtube">
+          <span>📺</span><span>YouTube</span>
+          <div class="flame-highlight"></div>
+        </li>
+        <li class="nav-item" data-section="reddit">
+          <span>🤖</span><span>Reddit</span>
+          <div class="flame-highlight"></div>
+        </li>
+      </ul>
+    </nav>
 
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <div class="fire-overlay" id="fireOverlay"></div>
-            
-            <!-- Home Section -->
-            <section class="content-section active" id="home">
-                <div class="fire-bg"></div>
-                <div class="content-wrapper">
-                    <h1 class="fire-title">Welcome to FireballMC</h1>
-                    <p class="fire-subtitle">Where Minecraft meets Mods</p>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>Subscribers</h3>
-                            <span class="stat-number">47</span>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Total Views</h3>
-                            <span class="stat-number">2.8M</span>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Videos</h3>
-                            <span class="stat-number">31</span>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Join Date</h3>
-                            <span class="stat-number">March 19, 2025</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="fire-overlay" id="fireOverlay"></div>
 
-            <!-- Statistics Section -->
-            <section class="content-section" id="statistics">
-                <div class="content-wrapper">
-                    <h1 class="fire-title">Channel Statistics</h1>
-                    <div class="chart-container">
-                        <div class="chart-card">
-                            <h3>Monthly Growth</h3>
-                            <div class="growth-chart">
-                                <div class="bar" style="height: 60%"></div>
-                                <div class="bar" style="height: 75%"></div>
-                                <div class="bar" style="height: 85%"></div>
-                                <div class="bar" style="height: 90%"></div>
-                                <div class="bar" style="height: 100%"></div>
-                            </div>
-                        </div>
-                        <div class="chart-card">
-                            <h3>Engagement Rate</h3>
-                            <div class="engagement-ring">
-                                <div class="ring-fill" style="--percentage: 78"></div>
-                                <span class="percentage">78%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="recent-videos">
-                        <h3>Recent Video Performance</h3>
-                        <div class="video-list">
-                            <div class="video-item">
-                                <span class="video-title">A shooting star!</span>
-                                <span class="video-views">393</span>
-                            </div>
-                            <div class="video-item">
-                                <span class="video-title">Never turn on discord light mode😭😭😭</span>
-                                <span class="video-views">1.8K views</span>
-                            </div>
-                            <div class="video-item">
-                                <span class="video-title">Little kids shows be like💀💀💀</span>
-                                <span class="video-views">1.6K</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <!-- Home -->
+      <section class="content-section active" id="home">
+        <h1 class="fire-title">Welcome to FireballMC</h1>
+        <p style="text-align:center; color:#ff9a5a; margin-bottom:3rem;">Where passion meets gaming excellence</p>
+        <div class="stats-grid">
+          <div class="stat-card"><h3>Subscribers</h3><span class="stat-number">47</span></div>
+          <div class="stat-card"><h3>Total Views</h3><span class="stat-number">14,453</span></div>
+          <div class="stat-card"><h3>Videos</h3><span class="stat-number">31</span></div>
+          <div class="stat-card"><h3>Join Date</h3><span class="stat-number">March 19, 2025</span></div>
+        </div>
+      </section>
 
-            <!-- Journey to 60 Section -->
-            <section class="content-section" id="journey">
-                <div class="content-wrapper">
-                    <h1 class="fire-title">Journey to 60 Subscribers</h1>
-                    <div class="journey-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75.3%"></div>
-                        </div>
-                        <div class="progress-text">47 / 60</div>
-                    </div>
-                    <div class="milestones">
-                        <div class="milestone completed">
-                            <div class="milestone-icon">🎯</div>
-                            <h3>1 Subscriber</h3>
-                            <p>Reached March 19, 2025</p>
-                        </div>
-                        <div class="milestone completed">
-                            <div class="milestone-icon">🏆</div>
-                            <h3>10 Subscribers</h3>
-                            <p>Reached May 7, 2025</p>
-                        </div>
-                        <div class="milestone completed">
-                            <div class="milestone-icon">⭐</div>
-                            <h3>25 Subscribers</h3>
-                            <p>Reached June 19, 2025</p>
-                        </div>
-                        <div class="milestone current">
-                            <div class="milestone-icon">🚀</div>
-                            <h3>45 Subscribers</h3>
-                            <p>October 29, 2025</p>
-                        </div>
-                    </div>
-                    <div class="journey-description">
-                        <p>Join us on this epic journey to 60 subscribers! Every milestone brings new challenges, better content, and amazing community rewards. Together, we're building something incredible!</p>
-                    </div>
-                </div>
-            </section>
+      <!-- Statistics -->
+      <section class="content-section" id="statistics">
+        <h1 class="fire-title">Channel Statistics</h1>
+        <div class="stats-grid">
+          <div class="stat-card"><h3>October View Growth</h3><span class="stat-number">+56%</span></div>
+          <div class="stat-card"><h3>October Watch Hour Growth</h3><span class="stat-number">+33%</span></div>
+          <div class="stat-card"><h3>October Subscriber Growth</h3><span class="stat-number">-60%</span></div>
+        </div>
+      </section>
 
-            <!-- YouTube Section -->
-            <section class="content-section" id="youtube">
-                <div class="content-wrapper">
-                    <h1 class="fire-title">Visit Our YouTube Channel</h1>
-                    <div class="youtube-promo">
-                        <div class="promo-card">
-                            <div class="youtube-icon">📺</div>
-                            <h2>FireballMC_YT</h2>
-                            <p>Experience the heat of epic Minecraft content!</p>
-                            <a href="https://youtube.com/@FireballMC_YT" target="_blank" class="youtube-btn">
-                                <span>Subscribe Now</span>
-                                <span class="fire-effect"></span>
-                            </a>
-                        </div>
-                        <div class="featured-videos">
-                            <h3>Featured Content</h3>
-                            <div class="video-grid">
-                                <div class="video-card">
-                                    <div class="video-thumbnail">🥤</div>
-                                    <h4>Soda Mod</h4>
-                                    <p>Different types of soda.</p>
-                                </div>
-                                <div class="video-card">
-                                    <div class="video-thumbnail">⚔️</div>
-                                    <h4>Magic and Guns</h4>
-                                    <p>Magic... and Guns?</p>
-                                </div>
-                                <div class="video-card">
-                                    <div class="video-thumbnail">⚡</div>
-                                    <h4>Electrite</h4>
-                                    <p>A new ore has appeared?</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <!-- Journey -->
+      <section class="content-section" id="journey">
+        <h1 class="fire-title">Journey to 60 Subscribers</h1>
+        <div class="journey-progress">
+          <div class="progress-bar"><div class="progress-fill" style="width:78.3%"></div></div>
+          <div class="progress-text">47 / 60 (78.3%)</div>
+        </div>
+        <div class="milestones">
+          <div class="milestone completed"><div class="milestone-icon"></div><h3>1</h3><p>Mar 19, 2025</p></div>
+          <div class="milestone completed"><div class="milestone-icon"></div><h3>15</h3><p>Jun 8, 2025</p></div>
+          <div class="milestone completed"><div class="milestone-icon"></div><h3>25</h3><p>Jun 20, 2025</p></div>
+          <div class="milestone completed"><div class="milestone-icon"></div><h3>45</h3><p>Oct 28, 2025</p></div>
+          <div class="milestone current"><div class="milestone-icon"></div><h3>60</h3><p>Target!</p></div>
+        </div>
+      </section>
 
-            <!-- Reddit Section -->
-            <section class="content-section" id="reddit">
-                <div class="content-wrapper">
-                    <h1 class="fire-title">Join Our Reddit Community</h1>
-                    <div class="reddit-promo">
-                        <div class="promo-card">
-                            <div class="reddit-icon">🤖</div>
-                            <h2>r/bagstudios</h2>
-                            <p>Connect with fellow gamers and share your experiences!</p>
-                            <a href="https://reddit.com/r/bagstudios" target="_blank" class="reddit-btn">
-                                <span>Join Community</span>
-                                <span class="fire-effect"></span>
-                            </a>
-                        </div>
-                        <div class="community-stats">
-                            <h3>Community Stats</h3>
-                            <div class="reddit-stats">
-                                <div class="reddit-stat">
-                                    <span class="stat-label">Cats in the BAG</span>
-                                    <span class="stat-value">47</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="reddit-description">
-                        <p>Our Reddit community is the perfect place to discuss strategies, share your creations, and connect with other passionate gamers. Join the conversation today!</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+      <!-- YouTube -->
+      <section class="content-section" id="youtube">
+        <h1 class="fire-title">Visit Our YouTube Channel</h1>
+        <div style="text-align:center; margin-top:3rem;">
+          <div class="stat-card" style="max-width:400px; margin:auto;">
+            <div style="font-size:4rem;">📺</div>
+            <h2>FireballMC_YT</h2>
+            <p>Experience the heat of epic Minecraft content!</p>
+            <a href="https://youtube.com/@FireballMC_YT" target="_blank" class="youtube-btn">
+              <span>Subscribe Now</span>
+              <span class="fire-effect"></span>
+            </a>
+          </div>
+        </div>
+      </section>
 
-    <script src="script.js"></script>
+      <!-- Reddit -->
+      <section class="content-section" id="reddit">
+        <h1 class="fire-title">Join Our Reddit Community</h1>
+        <div style="text-align:center; margin-top:3rem;">
+          <div class="stat-card" style="max-width:400px; margin:auto;">
+            <div style="font-size:4rem;">🤖</div>
+            <h2>r/bagstudios</h2>
+            <p>Connect with fellow gamers!</p>
+            <a href="https://reddit.com/r/bagstudios" target="_blank" class="reddit-btn">
+              <span>Join Community</span>
+              <span class="fire-effect"></span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.content-section');
+    const overlay = document.getElementById('fireOverlay');
+
+    const links = {
+      youtube: 'https://youtube.com/@FireballMC_YT',
+      reddit: 'https://reddit.com/r/bagstudios'
+    };
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const section = item.dataset.section;
+        if (links[section]) {
+          window.open(links[section], '_blank');
+          return;
+        }
+        switchSection(section);
+      });
+    });
+
+    function switchSection(target) {
+      overlay.classList.add('active');
+      setTimeout(() => {
+        sections.forEach(sec => sec.classList.remove('active'));
+        navItems.forEach(nav => nav.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+        document.querySelector(`[data-section="${target}"]`).classList.add('active');
+        overlay.classList.remove('active');
+      }, 400);
+    }
+
+    // Floating embers
+    function createEmber() {
+      const ember = document.createElement('div');
+      ember.className = 'ember';
+      ember.style.left = Math.random() * 100 + 'vw';
+      document.body.appendChild(ember);
+      setTimeout(() => ember.remove(), 6000);
+    }
+    setInterval(createEmber, 300);
+  </script>
 </body>
 </html>
