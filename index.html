@@ -1,49 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FireballMC – Home</title>
+  <title>FireballMC</title>
   <style>
+    /* ====== SAME FIRE CSS ====== */
     :root{--accent:#ff6b35;--accent-light:#ffd166;}
-    [data-theme="light"]{--bg-dark:#fff8f5;--text-dark:#2d1300;}
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#1a0a00 0%,#2d1300 50%,#1a0a00 100%);color:#fff;min-height:100vh;transition:background .4s,color .4s;}
-    .theme-toggle{position:fixed;top:1rem;right:1rem;background:var(--accent);border:none;border-radius:50%;width:48px;height:48px;font-size:1.5rem;cursor:pointer;z-index:2000;transition:transform .3s;}
-    .theme-toggle:hover{transform:scale(1.1) rotate(180deg);}
+    body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#1a0a00 0%,#2d1300 50%,#1a0a00 100%);color:#fff;min-height:100vh;}
     .sidebar{width:280px;height:100vh;position:fixed;left:0;top:0;background:linear-gradient(180deg,#2d1300 0%,#1a0a00 100%);border-right:2px solid var(--accent);box-shadow:4px 0 20px rgba(255,107,53,.3);padding:2rem 0;z-index:1000;}
     .logo h1{font-size:1.8rem;background:linear-gradient(45deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:3rem;animation:flicker 2s infinite alternate;}
     @keyframes flicker{0%{text-shadow:0 0 10px var(--accent);}100%{text-shadow:0 0 40px var(--accent-light);}}
     .nav-menu{list-style:none;padding:0 1rem;}
-    .nav-item{position:relative;padding:1rem 1.5rem;margin-bottom:.5rem;border-radius:15px;display:flex;align-items:center;gap:1rem;overflow:hidden;transition:all .3s ease;color:#fff;}
+    .nav-item{position:relative;padding:1rem 1.5rem;margin-bottom:.5rem;border-radius:15px;display:flex;align-items:center;gap:1rem;overflow:hidden;transition:all .3s ease;color:#fff;cursor:pointer;}
     .nav-item::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,107,53,.4),transparent);transition:left .5s ease;}
     .nav-item:hover::before{left:100%;}
-    .nav-item:hover{background:rgba(255,107,53,.1);transform:translateX(5px);}
     .nav-item.active{background:linear-gradient(135deg,var(--accent),var(--accent-light));box-shadow:0 4px 15px rgba(255,107,53,.4);}
+    .nav-item:hover{background:rgba(255,107,53,.1);transform:translateX(5px);}
     .main-content{margin-left:280px;padding:3rem 2rem;min-height:100vh;}@media(max-width:768px){.sidebar{width:100%;height:auto;position:relative;}.main-content{margin-left:0;padding:2rem 1rem;}}
     .fire-title{font-size:3rem;margin-bottom:2rem;background:linear-gradient(45deg,var(--accent),var(--accent-light),#ff9a5a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;animation:titleBurn 3s infinite alternate;}
     @keyframes titleBurn{0%{text-shadow:0 0 10px var(--accent);}100%{text-shadow:0 0 40px var(--accent-light);}}
-
-    /* ====== VIDEOS SECTION ====== */
-    .vid-top-nav{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
-    .vid-top-nav button{background:transparent;border:2px solid var(--accent);color:var(--accent);padding:.5rem 1rem;border-radius:10px;cursor:pointer;transition:all .3s;}
-    .vid-top-nav button.active{background:var(--accent);color:#fff;}
-    .vid-sub-nav{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
-    .vid-sub-nav button{background:transparent;border:1px solid var(--accent-light);color:var(--accent-light);padding:.4rem .8rem;border-radius:8px;cursor:pointer;transition:all .3s;font-size:.9rem;}
-    .vid-sub-nav button.active{background:var(--accent-light);color:#1a0a00;}
-    .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
-    .video-card{background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(255,154,90,.1));border:2px solid var(--accent);border-radius:15px;padding:1rem;transition:transform .3s;}
-    .video-card:hover{transform:translateY(-5px);}
-    .video-thumb{width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000;}
-    .video-thumb iframe{width:100%;height:100%;}
-    .video-title{font-size:1.1rem;color:var(--accent-light);margin-bottom:.25rem;}
-    .video-views{font-size:.9rem;color:#ccc;}
-
-    /* ====== API STATS HEADER ====== */
-    .api-stats{display:flex;gap:2rem;justify-content:center;margin-bottom:3rem;}
-    .api-stat-card{background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(255,154,90,.1));border:2px solid var(--accent);border-radius:15px;padding:1.5rem 2rem;text-align:center;}
-    .api-stat-card h3{color:var(--accent-light);margin-bottom:.5rem;}
-    .api-num{font-size:2rem;font-weight:bold;color:var(--accent);}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:3rem;}
+    .stat-card{background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(255,154,90,.1));border:2px solid var(--accent);border-radius:15px;padding:2rem;text-align:center;transition:all .3s ease;animation:float 4s ease-in-out infinite;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+    .stat-number{font-size:2.5rem;font-weight:bold;color:var(--accent);text-shadow:0 0 10px rgba(255,107,53,.5);}
+    .progress-bar{height:30px;background:rgba(255,107,53,.2);border-radius:15px;overflow:hidden;position:relative;}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));border-radius:15px;width:0;transition:width 1.5s ease;position:relative;}
+    .progress-text{text-align:center;margin-top:.75rem;color:var(--accent-light);}
+    .milestone{text-align:center;padding:2rem;border-radius:15px;transition:all .3s ease;}
+    .milestone.completed{background:linear-gradient(135deg,rgba(255,107,53,.2),rgba(255,154,90,.2));border:2px solid var(--accent);}
+    .milestone.current{background:linear-gradient(135deg,rgba(255,215,102,.2),rgba(255,154,90,.2));border:2px solid var(--accent-light);animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+    .youtube-btn,.reddit-btn{display:inline-block;padding:1rem 2rem;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;text-decoration:none;border-radius:25px;font-weight:bold;margin-top:2rem;position:relative;overflow:hidden;transition:all .3s ease;}
+    .youtube-btn:hover,.reddit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(255,107,53,.4);}
+    .fire-effect{position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .5s ease;}
+    .youtube-btn:hover .fire-effect,.reddit-btn:hover .fire-effect{left:100%;}
+    .ember{position:fixed;width:4px;height:4px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:1;animation:floatEmber 6s linear infinite;}
+    @keyframes floatEmber{0%{transform:translateY(100vh) scale(1);opacity:1;}100%{transform:translateY(-100vh) scale(0);opacity:0;}}
   </style>
 </head>
 <body data-theme="dark">
@@ -53,11 +47,10 @@
     <div class="logo"><h1>🔥 FireballMC</h1></div>
     <ul class="nav-menu">
       <li class="nav-item active" data-section="home">🏠 Home</li>
-      <li class="nav-item" data-section="stats">📊 Statistics</li>
+      <li class="nav-item" data-section="statistics">📊 Statistics</li>
       <li class="nav-item" data-section="journey">🚀 Journey to 60</li>
-      <li class="nav-item" data-section="videos">🎥 Videos</li>
-      <li class="nav-item"><a href="https://youtube.com/@FireballMC_YT" target="_blank" style="color:inherit;text-decoration:none;">📺 YouTube</a></li>
-      <li class="nav-item"><a href="https://reddit.com/r/bagstudios" target="_blank" style="color:inherit;text-decoration:none;">🤖 Reddit</a></li>
+      <li class="nav-item" data-section="youtube">📺 YouTube</span></li>
+      <li class="nav-item" data-section="reddit">🤖 Reddit</li>
       <li class="nav-item"><a href="https://5a4feaa2.fireballmc.pages.dev/" target="_blank" style="color:inherit;text-decoration:none;">🔥 Journey Site</a></li>
     </ul>
   </nav>
@@ -66,60 +59,70 @@
     <!-- Home -->
     <section class="content-section active" id="home">
       <h1 class="fire-title">Welcome to FireballMC</h1>
-      <div class="api-stats">
-        <div class="api-stat-card"><h3>Subscribers</h3><div class="api-num" id="subsDisplay">—</div></div>
-        <div class="api-stat-card"><h3>Total Views</h3><div class="api-num" id="viewsDisplay">—</div></div>
-      </div>
       <div class="stats-grid">
+        <div class="stat-card"><h3>Subscribers</h3><span class="stat-number" id="subsDisplay">—</span></div>
+        <div class="stat-card"><h3>Total Views</h3><span class="stat-number" id="viewsDisplay">—</span></div>
         <div class="stat-card"><h3>Videos</h3><span class="stat-number" id="videosCount">—</span></div>
-        <div class="stat-card"><h3>Join Date</h3><span class="stat-number">2020</span></div>
+        <div class="stat-card"><h3>Join Date</h3><span class="stat-number">March 19, 2025</span></div>
       </div>
     </section>
 
     <!-- Statistics -->
-    <section class="content-section" id="stats">
+    <section class="content-section" id="statistics">
       <h1 class="fire-title">Channel Statistics</h1>
       <div class="stats-grid">
-        <div class="stat-card"><h3>Monthly Growth</h3><div style="height:100px;background:linear-gradient(to top,var(--accent),var(--accent-light));border-radius:10px;margin-top:1rem;"></div></div>
-        <div class="stat-card"><h3>Engagement Rate</h3><span class="stat-number">78%</span></div>
+        <div class="stat-card"><h3>October View Growth</h3><span class="stat-number">+56%</span></div>
+        <div class="stat-card"><h3>October Watch Hour Growth</h3><span class="stat-number">+33%</span></div>
+        <div class="stat-card"><h3>October Subscriber Growth</h3><span class="stat-number">-60%</span></div>
       </div>
     </section>
 
-    <!-- Journey to 60 -->
+    <!-- Journey -->
     <section class="content-section" id="journey">
-      <h1 class="fire-title">Journey to 60 Subs</h1>
-      <div class="counter-wrap">
-        <div class="counter-card"><h3>Current Subs</h3><div class="counter-num" id="journeySubs">—</div></div>
-      </div>
+      <h1 class="fire-title">Journey to 60 Subscribers</h1>
       <div class="progress-wrap">
         <div class="progress-bar"><div class="progress-fill" id="journeyProgress"></div></div>
-        <div class="progress-label">Subs: <span id="journeyText">— / 60</span></div>
+        <div class="progress-text">47 / 60 (78.3%)</div>
       </div>
       <div class="milestones">
-        <div class="milestone completed"><div class="milestone-icon">🎯</div><h3>10</h3><p>Reached</p></div>
-        <div class="milestone completed"><div class="milestone-icon">🏆</div><h3>25</h3><p>Reached</p></div>
-        <div class="milestone completed"><div class="milestone-icon">⭐</div><h3>40</h3><p>Reached</p></div>
-        <div class="milestone current"><div class="milestone-icon">🚀</div><h3>60</h3><p>Target!</p></div>
+        <div class="milestone completed"><h3>1</h3><p>Mar 19, 2025</p></div>
+        <div class="milestone completed"><h3>15</h3><p>Jun 8, 2025</p></div>
+        <div class="milestone completed"><h3>25</h3><p>Jun 20, 2025</p></div>
+        <div class="milestone completed"><h3>45</h3><p>Oct 28, 2025</p></div>
+        <div class="milestone current"><h3>60</h3><p>Target!</p></div>
       </div>
     </section>
 
-    <!-- Videos -->
-    <section class="content-section" id="videos">
-      <h1 class="fire-title">Videos</h1>
-      <!-- Top nav: Shorts | Videos | Playlists -->
-      <div class="vid-top-nav" id="vidTopNav">
-        <button class="active" data-top="shorts">Shorts</button>
-        <button data-top="videos">Videos</button>
-        <button data-top="playlists">Playlists</button>
+    <!-- YouTube -->
+    <section class="content-section" id="youtube">
+      <h1 class="fire-title">Visit Our YouTube Channel</h1>
+      <div style="text-align:center; margin-top:3rem;">
+        <div class="stat-card" style="max-width:400px; margin:auto;">
+          <div style="font-size:4rem;">📺</div>
+          <h2>FireballMC_YT</h2>
+          <p>Experience the heat of epic Minecraft content!</p>
+          <a href="https://youtube.com/@FireballMC_YT" target="_blank" class="youtube-btn">
+            <span>Subscribe Now</span>
+            <span class="fire-effect"></span>
+          </a>
+        </div>
       </div>
-      <!-- Sub nav: Popular | Old | New -->
-      <div class="vid-sub-nav" id="vidSubNav">
-        <button class="active" data-sub="popular">Popular</button>
-        <button data-sub="old">Old</button>
-        <button data-sub="new">New</button>
+    </section>
+
+    <!-- Reddit -->
+    <section class="content-section" id="reddit">
+      <h1 class="fire-title">Join Our Reddit Community</h1>
+      <div style="text-align:center; margin-top:3rem;">
+        <div class="stat-card" style="max-width:400px; margin:auto;">
+          <div style="font-size:4rem;">🤖</div>
+          <h2>r/bagstudios</h2>
+          <p>Connect with fellow gamers!</p>
+          <a href="https://reddit.com/r/bagstudios" target="_blank" class="reddit-btn">
+            <span>Join Community</span>
+            <span class="fire-effect"></span>
+          </a>
+        </div>
       </div>
-      <!-- Grid -->
-      <div class="video-grid" id="videoGrid"></div>
     </section>
   </main>
 
@@ -178,95 +181,12 @@
     }
     function updateJourney(){
       const pct=(cachedSubs/60*100).toFixed(1);
-      document.getElementById('journeySubs').textContent=cachedSubs;
-      document.getElementById('journeyText').textContent=`${cachedSubs} / 60`;
       document.getElementById('journeyProgress').style.width=pct+'%';
+      document.getElementById('journeyText').textContent=`${cachedSubs} / 60 (${pct}%)`;
     }
 
-    // ====== VIDEOS – AUTO-FETCH REAL CONTENT ======
-    const vidTopNav=document.getElementById('vidTopNav');
-    const vidSubNav=document.getElementById('vidSubNav');
-    const videoGrid=document.getElementById('videoGrid');
-    let currentTop='shorts',currentSub='popular';
-
-    // caches
-    const cache={shorts:{popular:[],new:[],old:[]},videos:{popular:[],new:[],old:[]},playlists:{popular:[],new:[],old:[]}};
-
-    async function fetchVideos(type,order){
-      const url= type==='shorts'
-        ?`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&type=video&videoDuration=short&order=${order}&maxResults=20`
-        :type==='videos'
-        ?`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&type=video&order=${order}&maxResults=20`
-        :`https://www.googleapis.com/youtube/v3/playlists?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=${order}&maxResults=20`;
-      const res=await fetch(url);
-      const data=await res.json();
-      const ids=data.items.map(i=>i.id.videoId||i.id.playlistId).join(',');
-      if(!ids)return[];
-      // stats
-      const statsRes=await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${ids}&part=statistics`);
-      const statsData=await statsRes.json();
-      const statsMap={};
-      statsData.items.forEach(v=>statsMap[v.id]=parseInt(v.statistics.viewCount,10));
-      return data.items.map(i=>({
-        title:i.snippet.title,
-        views:statsMap[i.id.videoId||i.id.playlistId]||0,
-        id:i.id.videoId||i.id.playlistId,
-        date:i.snippet.publishedAt
-      }));
-    }
-
-    async function loadAllVideos(){
-      cache.shorts.popular=await fetchVideos('shorts','viewCount');
-      cache.shorts.new     =await fetchVideos('shorts','date');
-      cache.shorts.old     =await fetchVideos('shorts','date'); // we’ll reverse later
-      cache.videos.popular=await fetchVideos('videos','viewCount');
-      cache.videos.new    =await fetchVideos('videos','date');
-      cache.videos.old    =await fetchVideos('videos','date');
-      cache.playlists.popular=await fetchVideos('playlists','viewCount');
-      cache.playlists.new    =await fetchVideos('playlists','date');
-      cache.playlists.old    =await fetchVideos('playlists','date');
-      // reverse “old” arrays
-      ['shorts','videos','playlists'].forEach(t=>cache[t].old.reverse());
-      renderVideos();
-    }
-
-    function renderVideos(){
-      videoGrid.innerHTML='';
-      const list=cache[currentTop][currentSub]||[];
-      list.forEach(v=>{
-        const card=document.createElement('div');card.className='video-card';
-        const embedUrl=currentTop==='playlists'
-          ?`https://www.youtube.com/embed/videoseries?list=${v.id}`
-          :`https://www.youtube.com/embed/${v.id}`;
-        card.innerHTML=`
-          <div class="video-thumb">
-            <iframe src="${embedUrl}" title="${v.title}" frameborder="0" allowfullscreen></iframe>
-          </div>
-          <div class="video-title">${v.title}</div>
-          <div class="video-views">${v.views.toLocaleString()} views</div>
-        `;
-        videoGrid.appendChild(card);
-      });
-    }
-
-    vidTopNav.addEventListener('click',e=>{
-      if(e.target.tagName!=='BUTTON')return;
-      vidTopNav.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-      e.target.classList.add('active');
-      currentTop=e.target.dataset.top;
-      currentSub='popular';vidSubNav.querySelector('[data-sub="popular"]').click();
-    });
-    vidSubNav.addEventListener('click',e=>{
-      if(e.target.tagName!=='BUTTON')return;
-      vidSubNav.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-      e.target.classList.add('active');
-      currentSub=e.target.dataset.sub;
-      renderVideos();
-    });
-
-    // ====== INITIAL LOAD ======
+    // ====== INITIAL + REFRESH ======
     fetchStats();
-    loadAllVideos();
     setInterval(fetchStats,30000);
 
     // ====== EMBERS ======
