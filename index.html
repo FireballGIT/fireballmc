@@ -1,632 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
-    <title>FireballMC - YouTube Channel</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon-32x32.png" type="image/x-icon">
+<title>FireballMC - YouTube Channel</title>
+<style>
+:root{--primary-orange:#ff6b35;--dark-orange:#e55a2b;--fire-red:#ff4500;--fire-yellow:#ffa500;--dark-bg:#1a1a1a;--darker-bg:#0d0d0d;--text-light:#ffffff;--text-gray:#b0b0b0;}
+{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Arial,sans-serif;background:var(--darker-bg);color:var(--text-light);overflow-x:hidden;}
+.fire-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:linear-gradient(45deg,var(--darker-bg) 0%,#2a1a1a 50%,var(--darker-bg) 100%);}
+.fire-particle{position:absolute;width:4px;height:4px;background:var(--fire-yellow);border-radius:50%;animation:fireRise 3s infinite linear;opacity:0;}
+@keyframes fireRise{0%{transform:translateY(100vh) scale(0);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-100px) scale(1.5);opacity:0;}}
+header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-filter:blur(10px);padding:1rem 2rem;z-index:1000;box-shadow:0 2px 20px rgba(255,107,53,.3);}
+.header-content{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;}
+.logo{font-size:2rem;font-weight:bold;background:linear-gradient(45deg,var(--fire-red),var(--fire-yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fireGlow 2s ease-in-out infinite alternate;}
+@keyframes fireGlow{from{filter:drop-shadow(0 0 5px var(--fire-red));}to{filter:drop-shadow(0 0 20px var(--fire-yellow));}}
+.sidebar{position:fixed;left:0;top:80px;width:250px;height:calc(100vh - 80px);background:rgba(26,26,26,.98);backdrop-filter:blur(10px);padding:2rem 1rem;z-index:999;transform:translateX(-100%);transition:transform .3s ease;border-right:2px solid var(--primary-orange);}
+.sidebar.active{transform:translateX(0);}
+.menu-toggle{position:fixed;left:20px;top:100px;background:var(--primary-orange);border:none;padding:10px;border-radius:5px;cursor:pointer;z-index:1001;transition:all .3s ease;}
+.menu-toggle:hover{background:var(--fire-red);transform:scale(1.1);}
+.nav-item{display:block;padding:1rem;margin:.5rem 0;background:linear-gradient(45deg,rgba(255,107,53,.2),rgba(255,165,0,.2));border:1px solid var(--primary-orange);border-radius:8px;color:var(--text-light);text-decoration:none;transition:all .3s ease;cursor:pointer;}
+.nav-item:hover{background:linear-gradient(45deg,var(--primary-orange),var(--fire-yellow));transform:translateX(10px);box-shadow:0 5px 15px rgba(255,107,53,.4);}
+.main-content{margin-left:0;padding:120px 2rem 2rem;min-height:100vh;transition:all .3s ease;}
+.section{display:none;opacity:0;transform:translateY(20px);animation:fadeInUp .6s ease forwards;}
+.section.active{display:block;}
+@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+.hero{text-align:center;padding:4rem 0;}
+.hero h1{font-size:3.5rem;margin-bottom:1rem;background:linear-gradient(45deg,var(--fire-red),var(--fire-yellow),var(--fire-red));-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fireText 3s ease-in-out infinite;}
+@keyframes fireText{0%,100%{filter:hue-rotate(0deg);}50%{filter:hue-rotate(40deg);}}
+.subtitle{font-size:1.2rem;color:var(--text-gray);margin-bottom:2rem;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin:3rem 0;}
+.stat-card{background:rgba(255,107,53,.1);border:2px solid var(--primary-orange);border-radius:15px;padding:2rem;text-align:center;transition:all .3s ease;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent,rgba(255,165,0,.3),transparent);transform:rotate(45deg);transition:all .6s ease;opacity:0;}
+.stat-card:hover::before{opacity:1;animation:shimmer 1.5s ease;}
+@keyframes shimmer{0%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}100%{transform:translateX(100%) translateY(100%) rotate(45deg);}}
+.stat-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(255,107,53,.3);}
+.stat-number{font-size:2.5rem;font-weight:bold;color:var(--fire-yellow);margin-bottom:.5rem;}
+.stat-label{color:var(--text-gray);font-size:1rem;}
+.charts-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin:2rem 0;}
+.chart-card{background:rgba(26,26,26,.8);border:2px solid var(--primary-orange);border-radius:15px;padding:2rem;text-align:center;}
+.progress-bar{width:100%;height:20px;background:rgba(255,107,53,.2);border-radius:10px;overflow:hidden;margin:1rem 0;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--fire-red),var(--fire-yellow));border-radius:10px;transition:width 2s ease;position:relative;overflow:hidden;}
+.progress-fill::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:progressShine 2s infinite;}
+@keyframes progressShine{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.journey-content{text-align:center;padding:3rem 0;}
+.milestone{background:rgba(255,107,53,.1);border-left:4px solid var(--primary-orange);padding:1.5rem;margin:1rem 0;border-radius:0 10px 10px 0;transition:all .3s ease;}
+.milestone:hover{background:rgba(255,107,53,.2);transform:translateX(10px);}
+.external-link{display:inline-block;padding:1rem 2rem;background:linear-gradient(45deg,var(--primary-orange),var(--fire-yellow));color:white;text-decoration:none;border-radius:25px;margin:1rem;transition:all .3s ease;font-weight:bold;}
+.external-link:hover{transform:scale(1.05);box-shadow:0 10px 25px rgba(255,107,53,.4);}
+.loading{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,107,53,.3);border-radius:50%;border-top-color:var(--primary-orange);animation:spin 1s ease-in-out infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-        :root {
-            --primary-orange: #ff6b35;
-            --dark-orange: #e55a2b;
-            --fire-red: #ff4500;
-            --fire-yellow: #ffa500;
-            --dark-bg: #1a1a1a;
-            --darker-bg: #0d0d0d;
-            --text-light: #ffffff;
-            --text-gray: #b0b0b0;
-        }
+/*  MODS PAGE  */
+#mods .mods-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;margin-top:2rem;}
+#mods .mod-card{background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(255,209,102,.08));border:2px solid var(--primary-orange);border-radius:18px;padding:1.5rem;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+#mods .mod-card::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 180deg,transparent 40%,var(--fire-yellow) 50%,transparent 60%);animation:spin 6s linear infinite;opacity:.25;z-index:0;}
+#mods .mod-card > *{position:relative;z-index:1;}
+#mods .mod-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 12px 30px rgba(255,107,53,.35);}
+#mods .mod-title{font-size:1.4rem;color:var(--fire-yellow);margin-bottom:.5rem;}
+#mods .mod-desc{color:#ffd8b8;font-size:.95rem;line-height:1.4;}
+#mods .mod-dl{display:inline-block;margin-top:1rem;padding:.55rem 1.3rem;background:linear-gradient(45deg,var(--primary-orange),var(--fire-yellow));color:#1a0500;font-weight:bold;border-radius:20px;text-decoration:none;transition:filter .25s;}
+#mods .mod-dl:hover{filter:brightness(1.15);}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: var(--darker-bg);
-            color: var(--text-light);
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Fire Animation Background */
-        .fire-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, var(--darker-bg) 0%, #2a1a1a 50%, var(--darker-bg) 100%);
-            overflow: hidden;
-        }
-
-        .fire-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--fire-yellow);
-            border-radius: 50%;
-            animation: fireRise 3s infinite linear;
-            opacity: 0;
-        }
-
-        @keyframes fireRise {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        /* Header */
-        header {
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(255, 107, 53, 0.3);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--fire-red), var(--fire-yellow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fireGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes fireGlow {
-            from { filter: drop-shadow(0 0 5px var(--fire-red)); }
-            to { filter: drop-shadow(0 0 20px var(--fire-yellow)); }
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 80px;
-            width: 250px;
-            height: calc(100vh - 80px);
-            background: rgba(26, 26, 26, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 2rem 1rem;
-            z-index: 999;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            border-right: 2px solid var(--primary-orange);
-        }
-
-        .sidebar.active {
-            transform: translateX(0);
-        }
-
-        .menu-toggle {
-            position: fixed;
-            left: 20px;
-            top: 100px;
-            background: var(--primary-orange);
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1001;
-            transition: all 0.3s ease;
-        }
-
-        .menu-toggle:hover {
-            background: var(--fire-red);
-            transform: scale(1.1);
-        }
-
-        .nav-item {
-            display: block;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            background: linear-gradient(45deg, rgba(255, 107, 53, 0.2), rgba(255, 165, 0, 0.2));
-            border: 1px solid var(--primary-orange);
-            border-radius: 8px;
-            color: var(--text-light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-item:hover {
-            background: linear-gradient(45deg, var(--primary-orange), var(--fire-yellow));
-            transform: translateX(10px);
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 0;
-            padding: 120px 2rem 2rem;
-            min-height: 100vh;
-            transition: all 0.3s ease;
-        }
-
-        .section {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Home Section */
-        .hero {
-            text-align: center;
-            padding: 4rem 0;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--fire-red), var(--fire-yellow), var(--fire-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fireText 3s ease-in-out infinite;
-        }
-
-        @keyframes fireText {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(40deg); }
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            margin-bottom: 2rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .stat-card {
-            background: rgba(255, 107, 53, 0.1);
-            border: 2px solid var(--primary-orange);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 165, 0, 0.3), transparent);
-            transform: rotate(45deg);
-            transition: all 0.6s ease;
-            opacity: 0;
-        }
-
-        .stat-card:hover::before {
-            opacity: 1;
-            animation: shimmer 1.5s ease;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--fire-yellow);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-gray);
-            font-size: 1rem;
-        }
-
-        /* Statistics Section */
-        .charts-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .chart-card {
-            background: rgba(26, 26, 26, 0.8);
-            border: 2px solid var(--primary-orange);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background: rgba(255, 107, 53, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--fire-red), var(--fire-yellow));
-            border-radius: 10px;
-            transition: width 2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: progressShine 2s infinite;
-        }
-
-        @keyframes progressShine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Journey Section */
-        .journey-content {
-            text-align: center;
-            padding: 3rem 0;
-        }
-
-        .milestone {
-            background: rgba(255, 107, 53, 0.1);
-            border-left: 4px solid var(--primary-orange);
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-radius: 0 10px 10px 0;
-            transition: all 0.3s ease;
-        }
-
-        .milestone:hover {
-            background: rgba(255, 107, 53, 0.2);
-            transform: translateX(10px);
-        }
-
-        .external-link {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(45deg, var(--primary-orange), var(--fire-yellow));
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            margin: 1rem;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .external-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 107, 53, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--primary-orange);
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
+/*  PROJECTS PAGE  */
+#projects .projects-timeline{margin-top:2rem;padding-left:1.5rem;border-left:3px solid var(--primary-orange);}
+#projects .project{position:relative;margin-bottom:3rem;padding-left:2rem;}
+#projects .project::before{content:'';position:absolute;left:-11px;top:6px;width:20px;height:20px;background:var(--fire-yellow);border:3px solid var(--primary-orange);border-radius:50%;box-shadow:0 0 12px var(--fire-yellow);}
+#projects .project-title{font-size:1.5rem;color:var(--fire-yellow);margin-bottom:.4rem;}
+#projects .project-date{font-size:.8rem;color:#ffa86e;margin-bottom:.7rem;}
+#projects .project-desc{color:#ffe0c1;line-height:1.5;}
+#projects .project-tech{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;}
+#projects .tech-tag{background:rgba(255,107,53,.18);border:1px solid var(--primary-orange);padding:.25rem .7rem;border-radius:12px;font-size:.75rem;color:var(--fire-yellow);}
+</style>
 </head>
 <body>
-    <!-- Fire Background -->
-    <div class="fire-bg" id="fireBg"></div>
-
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <div class="logo">🔥 FireballMC</div>
-            <div>YouTube Creator</div>
-        </div>
-    </header>
-
-    <!-- Menu Toggle -->
-    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-
-    <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
-        <a href="#" class="nav-item" onclick="showSection('home')">🏠 Home</a>
-        <a href="#" class="nav-item" onclick="showSection('statistics')">📊 Statistics</a>
-        <a href="#" class="nav-item" onclick="showSection('journey')">🚀 Journey to 60</a>
-        <a href="#" class="nav-item" onclick="window.open('https://youtube.com/@FireballMC_YT', '_blank')">📺 YouTube</a>
-        <a href="#" class="nav-item" onclick="window.open('https://reddit.com/r/bagstudios', '_blank')">🔥 Reddit</a>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Home Section -->
-        <section id="home" class="section active">
-            <div class="hero">
-                <h1>Welcome to FireballMC</h1>
-                <p class="subtitle">Igniting the YouTube universe with epic content!</p>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="subCount">
-                            <span class="loading"></span>
-                        </div>
-                        <div class="stat-label">Subscribers</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="viewCount">
-                            <span class="loading"></span>
-                        </div>
-                        <div class="stat-label">Total Views</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="videoCount">
-                            <span class="loading"></span>
-                        </div>
-                        <div class="stat-label">Videos</div>
-                    </div>
-                </div>
-
-                <p>Join the fire nation and become part of our growing community!</p>
-            </div>
-        </section>
-
-        <!-- Statistics Section -->
-        <section id="statistics" class="section">
-            <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2.5rem; color: var(--fire-yellow);">
-                Channel Statistics
-            </h2>
-            
-            <div class="charts-container">
-                <div class="chart-card">
-                    <h3>Subscriber Goal</h3>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 75%;" id="subProgress"></div>
-                    </div>
-                    <p>Target: 60 Subscribers</p>
-                </div>
-                
-                <div class="chart-card">
-                    <h3>View Goal</h3>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 60%;" id="viewProgress"></div>
-                    </div>
-                    <p>Target: 25K Views</p>
-                </div>
-                
-
-            <div style="text-align: center; margin-top: 2rem;">
-                <p>Track our progress as we grow the channel!</p>
-            </div>
-        </section>
-
-        <!-- Journey Section -->
-        <section id="journey" class="section">
-            <div class="journey-content">
-                <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--fire-yellow);">
-                    The Journey to 60
-                </h2>
-                
-                <div class="milestone">
-                    <h3>🎯 Started Channel</h3>
-                    <p>Accomplished March 19, 2025</p>
-                </div>
-                
-                <div class="milestone">
-                    <h3>🎬 First Video</h3>
-                    <p>Accomplished March 19, 2025</p>
-                </div>
-                
-                <div class="milestone">
-                    <h3>25 Subscribers</h3>
-                    <p>Accomplished June 20, 2025</p>
-                </div>
-                
-                <div class="milestone">
-                    <h3>15,000 Views</h3>
-                    <p>We can do it, Fireball Army!</p>
-                </div>
-
-                <div class="milestone">
-                    <h3>60 Subscribers</h3>
-                    <p>We can do it, Fireball Army!</p>
-                </div>
-
-                <div class="milestone">
-                    <h3>25,000 Views</h3>
-                    <p>We can do it, Fireball Army!</p>
-                </div>
-
-                <a href="https://fireball-j60.pages.dev" target="_blank" class="external-link">
-                    Visit the Journey to 60 Page 🚀
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <script>
-        // YouTube API Configuration
-        const API_KEY = 'AIzaSyDMf_dA53j07Jr76SwIBhGPwAo_ISWYgRE';
-        const CHANNEL_ID = 'UCG2Amy2r9zcApNwAumUWmSQ';
-
-        // Create fire particles
-        function createFireParticles() {
-            const fireBg = document.getElementById('fireBg');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'fire-particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 3 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                fireBg.appendChild(particle);
-            }
-        }
-
-        // Toggle Sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('active');
-        }
-
-        // Show Section with Animation
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-
-            // Show selected section with delay for smooth transition
-            setTimeout(() => {
-                const targetSection = document.getElementById(sectionId);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                }
-            }, 100);
-
-            // Close sidebar on mobile
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('active');
-        }
-
-        // Fetch YouTube Statistics
-        async function fetchYouTubeStats() {
-            if (API_KEY === 'YOUR_YOUTUBE_API_KEY' || CHANNEL_ID === 'YOUR_CHANNEL_ID') {
-                // Demo data for testing
-                document.getElementById('subCount').innerHTML = '45.2K';
-                document.getElementById('viewCount').innerHTML = '892K';
-                document.getElementById('videoCount').innerHTML = '156';
-                
-                // Update progress bars
-                document.getElementById('subProgress').style.width = '45%';
-                document.getElementById('viewProgress').style.width = '89%';
-                return;
-            }
-
-            try {
-                const response = await fetch(
-                    `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`
-                );
-                const data = await response.json();
-                
-                if (data.items && data.items.length > 0) {
-                    const stats = data.items[0].statistics;
-                    
-                    // Update UI with real data
-                    document.getElementById('subCount').innerHTML = parseInt(stats.subscriberCount).toLocaleString();
-                    document.getElementById('viewCount').innerHTML = parseInt(stats.viewCount).toLocaleString();
-                    document.getElementById('videoCount').innerHTML = stats.videoCount;
-                    
-                    // Update progress bars
-                    const subPercentage = Math.min((parseInt(stats.subscriberCount) / 60) * 100, 100);
-                    const viewPercentage = Math.min((parseInt(stats.viewCount) / 25000) * 100, 100);
-
-                    
-                    document.getElementById('subProgress').style.width = subPercentage + '%';
-                    document.getElementById('viewProgress').style.width = viewPercentage + '%';
-                }
-            } catch (error) {
-                console.error('Error fetching YouTube stats:', error);
-                // Fallback to demo data
-                document.getElementById('subCount').innerHTML = '45.2K';
-                document.getElementById('viewCount').innerHTML = '892K';
-                document.getElementById('videoCount').innerHTML = '156';
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            createFireParticles();
-            fetchYouTubeStats();
-            
-            // Auto-refresh stats every 5 minutes
-            setInterval(fetchYouTubeStats, 300000);
-        });
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('sidebar');
-            const menuToggle = document.querySelector('.menu-toggle');
-            
-            if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
-                sidebar.classList.remove('active');
-            }
-        });
-    </script>
+<div class="fire-bg" id="fireBg"></div>
+<header>
+<div class="header-content">
+<div class="logo">🔥 FireballMC</div>
+<div>YouTube Creator</div>
+</div>
+</header>
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+<nav class="sidebar" id="sidebar">
+<a href="#" class="nav-item" onclick="showSection('home')">🏠 Home</a>
+<a href="#" class="nav-item" onclick="showSection('statistics')">📊 Statistics</a>
+<a href="#" class="nav-item" onclick="showSection('journey')">🚀 Journey to 60</a>
+<a href="#" class="nav-item" onclick="showSection('mods')">🧪 Mods</a>
+<a href="#" class="nav-item" onclick="showSection('projects')">👨‍💻 Projects</a>
+<a href="https://youtube.com/@FireballMC_YT" target="_blank" class="nav-item">📺 YouTube</a>
+<a href="https://reddit.com/r/bagstudios" target="_blank" class="nav-item">🔥 Reddit</a>
+</nav>
+<main class="main-content">
+<section id="home" class="section active">
+<div class="hero">
+<h1>Welcome to FireballMC</h1>
+<p class="subtitle">Igniting the YouTube universe with epic content!</p>
+<div class="stats-grid">
+<div class="stat-card">
+<div class="stat-number" id="subCount"><span class="loading"></span></div>
+<div class="stat-label">Subscribers</div>
+</div>
+<div class="stat-card">
+<div class="stat-number" id="viewCount"><span class="loading"></span></div>
+<div class="stat-label">Total Views</div>
+</div>
+<div class="stat-card">
+<div class="stat-number" id="videoCount"><span class="loading"></span></div>
+<div class="stat-label">Videos</div>
+</div>
+</div>
+<p>Join the fire nation and become part of our growing community!</p>
+</div>
+</section>
+<section id="statistics" class="section">
+<h2 style="text-align:center;margin-bottom:2rem;font-size:2.5rem;color:var(--fire-yellow);">Channel Statistics</h2>
+<div class="charts-container">
+<div class="chart-card">
+<h3>Subscriber Goal</h3>
+<div class="progress-bar"><div class="progress-fill" id="subProgress"></div></div>
+<p>Target: 60 Subscribers</p>
+</div>
+<div class="chart-card">
+<h3>View Goal</h3>
+<div class="progress-bar"><div class="progress-fill" id="viewProgress"></div></div>
+<p>Target: 25K Views</p>
+</div>
+</div>
+<div style="text-align:center;margin-top:2rem;"><p>Track our progress as we grow the channel!</p></div>
+</section>
+<section id="journey" class="section">
+<div class="journey-content">
+<h2 style="font-size:2.5rem;margin-bottom:2rem;color:var(--fire-yellow);">The Journey to 60</h2>
+<div class="milestone"><h3>🎯 Started Channel</h3><p>Accomplished March 19, 2025</p></div>
+<div class="milestone"><h3>🎬 First Video</h3><p>Accomplished March 19, 2025</p></div>
+<div class="milestone"><h3>25 Subscribers</h3><p>Accomplished June 20, 2025</p></div>
+<div class="milestone"><h3>15,000 Views</h3><p>We can do it, Fireball Army!</p></div>
+<div class="milestone"><h3>60 Subscribers</h3><p>We can do it, Fireball Army!</p></div>
+<div class="milestone"><h3>25,000 Views</h3><p>We can do it, Fireball Army!</p></div>
+<a href="https://fireball-j60.pages.dev" target="_blank" class="external-link">Visit the Journey to 60 Page 🚀</a>
+</div>
+</section>
+<section id="mods" class="section">
+<h2 class="fire-title">🧪 Fireball MC Mods</h2>
+<div class="mods-grid">
+<div class="mod-card">
+<h3 class="mod-title">Coca Cola Crazy!(1.21.4)</h3>
+<p class="mod-desc">From notch soda to assasin soda, this mod's got you covered!</p>
+<a class="mod-dl" href="#">Download</a>
+</div>
+<div class="mod-card">
+<h3 class="mod-title">Magic... and Guns?(1.21.4)</h3>
+<p class="mod-desc">It's like Harry Potter with a little more... kick.</p>
+<a class="mod-dl" href="#">Download</a>
+</div>
+<div>
+<h3 class="mod-title">A Cooking Catastrophe/Kitchen Essentials(1.21.4)</h3>
+<p class="mod-desc">Ingredients! Food! More food! And... pepper spray?</p>
+</div>
+<div>
+<h3 class="mod-title">Electromode(1.21.4)</h3>
+<p class="mod-desc">A new ore... and a new way to die, I guess.</p>
+</div>
+</div>
+</section>
+<section id="projects" class="section">
+<h2 class="fire-title">👨‍💻 Projects/Events</h2>
+<div class="projects-timeline">
+<div class="project">
+<h3 class="project-title">C+ / BagScript</h3>
+<div class="project-date">Started August 2025</div>
+<p class="project-desc">A Work-In-Progress BAG Studios Programming Language</p>
+<div class="project-tech">
+<span class="tech-tag">Est. Finish in March 2026</span>
+</div>
+</div>
+<div class="project">
+<h3 class="project-title">Journey to 60!</h3>
+<div class="project-date">Currently In Effect</div>
+<p class="project-desc">The Journey to 60 subscribers and 25K views! Ends Jan. 1, 2026</p>
+</div>
+</div>
+</section>
+</main>
+<script>
+const API_KEY='AIzaSyDMf_dA53j07Jr76SwIBhGPwAo_ISWYgRE';
+const CHANNEL_ID='UCG2Amy2r9zcApNwAumUWmSQ';
+function createFireParticles(){
+const fb=document.getElementById('fireBg');
+for(let i=0;i<50;i++){
+const p=document.createElement('div');p.className='fire-particle';
+p.style.left=Math.random()*100+'%';p.style.animationDelay=Math.random()*3+'s';
+p.style.animationDuration=(Math.random()*3+2)+'s';fb.appendChild(p);
+}
+}
+function toggleSidebar(){
+document.getElementById('sidebar').classList.toggle('active');
+}
+function showSection(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+setTimeout(()=>{document.getElementById(id)?.classList.add('active');},100);
+toggleSidebar();
+}
+async function fetchYouTubeStats(){
+if(API_KEY==='YOUR_YOUTUBE_API_KEY'||CHANNEL_ID==='YOUR_CHANNEL_ID'){
+document.getElementById('subCount').textContent='45';
+document.getElementById('viewCount').textContent='15 892';
+document.getElementById('videoCount').textContent='12';
+document.getElementById('subProgress').style.width='75%';
+document.getElementById('viewProgress').style.width='63.6%';
+return;
+}
+try{
+const res=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
+const data=await res.json();
+if(data.items&&data.items[0]){
+const s=data.items[0].statistics;
+document.getElementById('subCount').textContent=parseInt(s.subscriberCount).toLocaleString();
+document.getElementById('viewCount').textContent=parseInt(s.viewCount).toLocaleString();
+document.getElementById('videoCount').textContent=s.videoCount;
+document.getElementById('subProgress').style.width=Math.min((parseInt(s.subscriberCount)/60)*100,100)+'%';
+document.getElementById('viewProgress').style.width=Math.min((parseInt(s.viewCount)/25000)*100,100)+'%';
+}
+}catch(e){console.error(e);}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+createFireParticles();fetchYouTubeStats();setInterval(fetchYouTubeStats,300000);
+});
+document.addEventListener('click',e=>{
+const sb=document.getElementById('sidebar');
+if(!sb.contains(e.target)&&!e.target.closest('.menu-toggle'))sb.classList.remove('active');
+});
+</script>
 </body>
 </html>
