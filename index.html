@@ -121,7 +121,7 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 <div class="chart-card">
 <h3>Subscriber Goal</h3>
 <div class="progress-bar"><div class="progress-fill" id="subProgress"></div></div>
-<p>Target: 60 Subscribers</p>
+<p>Target: 75 Subscribers</p>
 </div>
 <div class="chart-card">
 <h3>View Goal</h3>
@@ -137,10 +137,10 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 <div class="milestone"><h3>🎯 Started Channel</h3><p>Accomplished March 19, 2025</p></div>
 <div class="milestone"><h3>🎬 First Video</h3><p>Accomplished March 19, 2025</p></div>
 <div class="milestone"><h3>25 Subscribers</h3><p>Accomplished June 20, 2025</p></div>
-<div class="milestone"><h3>15,000 Views</h3><p>We can do it, Fireball Army!</p></div>
-<div class="milestone"><h3>60 Subscribers</h3><p>We can do it, Fireball Army!</p></div>
+<div class="milestone"><h3>15,000 Views</h3><p>Accomplished November 13, 2025</p></div>
+<div class="milestone"><h3>60 Subscribers</h3><p>Accomplished November 23, 2025</p></div>
 <div class="milestone"><h3>25,000 Views</h3><p>We can do it, Fireball Army!</p></div>
-<a href="https://fireball-j60.pages.dev" target="_blank" class="external-link">Visit the Journey to 60 Page 🚀</a>
+<a href="https://fireball-j60.pages.dev" target="_blank" class="external-link">Visit the events page!</a>
 </div>
 </section>
 <section id="mods" class="section">
@@ -156,21 +156,27 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 <p class="mod-desc">It's like Harry Potter with a little more... kick.</p>
 <a class="mod-dl" href="#">Download</a>
 </div>
-<div>
+<div class="mod-card">
 <h3 class="mod-title">A Cooking Catastrophe/Kitchen Essentials(1.21.4)</h3>
 <p class="mod-desc">Ingredients! Food! More food! And... pepper spray?</p>
+<a class="mod-dl" href="#">Download</a>
 </div>
-<div>
+<div class="mod-card">
 <h3 class="mod-title">Electromode(1.21.4)</h3>
 <p class="mod-desc">A new ore... and a new way to die, I guess.</p>
+<a class="mod-dl" href="#">Download</a>
 </div>
+<div class="mod-card">
+<h3 class="mod-title">FIREPOWER(1.21.4)</h3>
+<p class="mod-desc">The 60 subscriber special!</p>
+<a class="mod-dl" href="#">Download</a>
 </div>
 </section>
 <section id="projects" class="section">
 <h2 class="fire-title">👨‍💻 Projects/Events</h2>
 <div class="projects-timeline">
 <div class="project">
-<h3 class="project-title">C+ / BagScript</h3>
+<h3 class="project-title">C+</h3>
 <div class="project-date">Started August 2025</div>
 <p class="project-desc">A Work-In-Progress BAG Studios Programming Language</p>
 <div class="project-tech">
@@ -178,9 +184,9 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 </div>
 </div>
 <div class="project">
-<h3 class="project-title">Journey to 60!</h3>
-<div class="project-date">Currently In Effect</div>
-<p class="project-desc">The Journey to 60 subscribers and 25K views! Ends Jan. 1, 2026</p>
+<h3 class="project-title">Journey to 60<strong>[FINISHED]</strong></h3>
+<div class="project-date">November 1st - January 1st</div>
+<p class="project-desc">Journey to 60 subscribers</p>
 </div>
 </div>
 </section>
@@ -221,7 +227,7 @@ const s=data.items[0].statistics;
 document.getElementById('subCount').textContent=parseInt(s.subscriberCount).toLocaleString();
 document.getElementById('viewCount').textContent=parseInt(s.viewCount).toLocaleString();
 document.getElementById('videoCount').textContent=s.videoCount;
-document.getElementById('subProgress').style.width=Math.min((parseInt(s.subscriberCount)/60)*100,100)+'%';
+document.getElementById('subProgress').style.width=Math.min((parseInt(s.subscriberCount)/75)*100,100)+'%';
 document.getElementById('viewProgress').style.width=Math.min((parseInt(s.viewCount)/25000)*100,100)+'%';
 }
 }catch(e){console.error(e);}
