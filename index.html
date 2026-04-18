@@ -94,7 +94,7 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 <a href="https://reddit.com/r/bagstudios" target="_blank" class="nav-item">Reddit</a>
 <a href="https://solo.to/fireballmcyt" target="_blank" class="nav-item">Socials</a>
 <a href="https://patreon.com/c/FireballMC" target="_blank" class="nav-item">Patreon</a>
-<a href="https://discord.gg/46nx83AyqZ" target="_blank" class="nav-item">Patreon</a>
+<a href="https://discord.gg/46nx83AyqZ" target="_blank" class="nav-item">Discord</a>
 </nav>
 <main class="main-content">
 <section id="home" class="section active">
@@ -178,18 +178,6 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 <section id="projects" class="section">
 <h2 class="fire-title">👨‍💻 Projects/Events</h2>
 <div class="projects-timeline">
-<div class="project">
-<h3 class="project-title">C+</h3>
-<div class="project-date">Started August 2025</div>
-<p class="project-desc">A Work-In-Progress BAG Studios Programming Language</p>
-<div class="project-tech">
-<span class="tech-tag">Est. Finish in March 2026</span>
-</div>
-</div>
-<div class="project">
-<h3 class="project-title">Journey to 60<strong>[FINISHED]</strong></h3>
-<div class="project-date">November 1st - January 1st</div>
-<p class="project-desc">Journey to 60 subscribers</p>
 </div>
 </div>
 </section>
@@ -230,8 +218,8 @@ const s=data.items[0].statistics;
 document.getElementById('subCount').textContent=parseInt(s.subscriberCount).toLocaleString();
 document.getElementById('viewCount').textContent=parseInt(s.viewCount).toLocaleString();
 document.getElementById('videoCount').textContent=s.videoCount;
-document.getElementById('subProgress').style.width=Math.min((parseInt(s.subscriberCount)/75)*100,100)+'%';
-document.getElementById('viewProgress').style.width=Math.min((parseInt(s.viewCount)/25000)*100,100)+'%';
+document.getElementById('subProgress').style.width=Math.min((parseInt(s.subscriberCount)/100)*100,100)+'%';
+document.getElementById('viewProgress').style.width=Math.min((parseInt(s.viewCount)/50000)*100,100)+'%';
 }
 }catch(e){console.error(e);}
 }
