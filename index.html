@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +53,7 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 .loading{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,107,53,.3);border-radius:50%;border-top-color:var(--primary-orange);animation:spin 1s ease-in-out infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/*  MODS PAGE  */
+/* MODS PAGE */
 #mods .mods-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;margin-top:2rem;}
 #mods .mod-card{background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(255,209,102,.08));border:2px solid var(--primary-orange);border-radius:18px;padding:1.5rem;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
 #mods .mod-card::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 180deg,transparent 40%,var(--fire-yellow) 50%,transparent 60%);animation:spin 6s linear infinite;opacity:.25;z-index:0;}
@@ -64,7 +65,7 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 #mods .mod-dl:hover{filter:brightness(1.15);}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/*  PROJECTS PAGE  */
+/* PROJECTS PAGE */
 #projects .projects-timeline{margin-top:2rem;padding-left:1.5rem;border-left:3px solid var(--primary-orange);}
 #projects .project{position:relative;margin-bottom:3rem;padding-left:2rem;}
 #projects .project::before{content:'';position:absolute;left:-11px;top:6px;width:20px;height:20px;background:var(--fire-yellow);border:3px solid var(--primary-orange);border-radius:50%;box-shadow:0 0 12px var(--fire-yellow);}
@@ -73,6 +74,209 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 #projects .project-desc{color:#ffe0c1;line-height:1.5;}
 #projects .project-tech{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;}
 #projects .tech-tag{background:rgba(255,107,53,.18);border:1px solid var(--primary-orange);padding:.25rem .7rem;border-radius:12px;font-size:.75rem;color:var(--fire-yellow);}
+
+/* VTL/OER CALCULATOR - ADDED */
+#vtl-oer .calculator-heading{
+  text-align:center;
+  font-size:2.5rem;
+  margin-bottom:.7rem;
+  color:var(--fire-yellow);
+}
+#vtl-oer .calculator-subtitle{
+  text-align:center;
+  color:var(--text-gray);
+  line-height:1.6;
+  margin-bottom:2rem;
+}
+#vtl-oer .calculator-panel{
+  max-width:760px;
+  margin:0 auto;
+  padding:clamp(1.2rem,4vw,2.5rem);
+  background:linear-gradient(145deg,rgba(255,107,53,.12),rgba(26,26,26,.92));
+  border:2px solid var(--primary-orange);
+  border-radius:22px;
+  box-shadow:0 12px 35px rgba(255,107,53,.13);
+}
+#vtl-oer .calculator-panel h3{
+  color:var(--fire-yellow);
+  margin-bottom:1.2rem;
+}
+#vtl-oer .calculator-fields{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1.2rem;
+}
+#vtl-oer .calculator-field{
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+}
+#vtl-oer .calculator-field label{
+  font-weight:bold;
+  color:#ffe0c1;
+}
+#vtl-oer .calculator-field input{
+  width:100%;
+  min-width:0;
+  padding:.95rem 1rem;
+  border:1px solid rgba(255,107,53,.65);
+  border-radius:13px;
+  outline:none;
+  background:rgba(13,13,13,.9);
+  color:var(--text-light);
+  font:inherit;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+#vtl-oer .calculator-field input:focus{
+  border-color:var(--fire-yellow);
+  box-shadow:0 0 0 3px rgba(255,165,0,.16);
+  background:#17100d;
+}
+#vtl-oer .calculator-field input::placeholder{color:#858585;}
+#vtl-oer .field-hint{
+  color:var(--text-gray);
+  font-size:.82rem;
+  line-height:1.4;
+}
+#vtl-oer .calculator-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.8rem;
+  margin-top:1.5rem;
+}
+#vtl-oer .calculate-button,
+#vtl-oer .reset-button{
+  border:0;
+  border-radius:25px;
+  padding:.9rem 1.5rem;
+  font:inherit;
+  font-weight:bold;
+  cursor:pointer;
+  transition:transform .2s,filter .2s,box-shadow .2s;
+}
+#vtl-oer .calculate-button{
+  flex:1;
+  min-width:180px;
+  background:linear-gradient(45deg,var(--primary-orange),var(--fire-yellow));
+  color:#1a0800;
+}
+#vtl-oer .reset-button{
+  background:rgba(255,107,53,.12);
+  color:var(--text-light);
+  border:1px solid var(--primary-orange);
+}
+#vtl-oer .calculate-button:hover,
+#vtl-oer .reset-button:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.1);
+  box-shadow:0 7px 18px rgba(255,107,53,.2);
+}
+#vtl-oer .calculator-error{
+  margin-top:1rem;
+  padding:1rem;
+  border:1px solid #ff6b6b;
+  border-radius:12px;
+  color:#ffb3b3;
+  background:rgba(255,60,60,.08);
+  line-height:1.5;
+}
+#vtl-oer .calculator-results{
+  max-width:1000px;
+  margin:2rem auto 0;
+}
+#vtl-oer .results-heading{
+  text-align:center;
+  color:var(--fire-yellow);
+  font-size:1.8rem;
+  margin-bottom:1.3rem;
+}
+#vtl-oer .results-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1rem;
+}
+#vtl-oer .result-card{
+  background:rgba(255,107,53,.09);
+  border:1px solid var(--primary-orange);
+  border-radius:16px;
+  padding:1.4rem;
+  text-align:center;
+  transition:transform .2s,box-shadow .2s;
+}
+#vtl-oer .result-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(255,107,53,.15);
+}
+#vtl-oer .result-label{
+  color:var(--text-gray);
+  font-size:.9rem;
+  margin-bottom:.7rem;
+}
+#vtl-oer .result-value{
+  font-size:clamp(1.45rem,4vw,2rem);
+  font-weight:bold;
+  color:var(--fire-yellow);
+  overflow-wrap:anywhere;
+}
+#vtl-oer .result-description{
+  color:#ffd8b8;
+  font-size:.8rem;
+  margin-top:.65rem;
+  line-height:1.5;
+}
+#vtl-oer .score-panel{
+  margin-top:1.2rem;
+  padding:1.5rem;
+  background:rgba(13,13,13,.72);
+  border:1px solid rgba(255,165,0,.45);
+  border-radius:16px;
+}
+#vtl-oer .score-panel h3{
+  color:var(--fire-yellow);
+  margin-bottom:.6rem;
+}
+#vtl-oer .score-track{
+  height:14px;
+  width:100%;
+  overflow:hidden;
+  border-radius:20px;
+  background:rgba(255,107,53,.18);
+  margin:1rem 0;
+}
+#vtl-oer .score-track-fill{
+  height:100%;
+  width:0%;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--fire-red),var(--fire-yellow));
+  transition:width .5s ease;
+}
+#vtl-oer .score-explanation{
+  color:var(--text-gray);
+  line-height:1.6;
+  font-size:.92rem;
+}
+#vtl-oer .calculator-footnote{
+  text-align:center;
+  color:var(--text-gray);
+  line-height:1.6;
+  font-size:.88rem;
+  margin:1.5rem auto 0;
+  max-width:760px;
+}
+#vtl-oer [hidden]{display:none!important;}
+
+@media(max-width:600px){
+  .header-content{gap:1rem;}
+  .logo{font-size:1.5rem;}
+  .header-content>div:last-child{font-size:.85rem;}
+  .main-content{padding:110px 1rem 2rem;}
+  .hero h1{font-size:2.4rem;}
+  #vtl-oer .calculator-heading{font-size:2rem;}
+  #vtl-oer .calculator-fields{grid-template-columns:1fr;}
+  #vtl-oer .calculator-panel{padding:1.2rem;}
+  #vtl-oer .calculator-actions{flex-direction:column;}
+  #vtl-oer .calculate-button{min-width:0;}
+}
 </style>
 </head>
 <body>
@@ -85,17 +289,22 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 </header>
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 <nav class="sidebar" id="sidebar">
-<a href="#" class="nav-item" onclick="showSection('home')">Home</a>
-<a href="#" class="nav-item" onclick="showSection('statistics')">Statistics</a>
-<a href="#" class="nav-item" onclick="showSection('journey')">Journey to 60</a>
-<a href="#" class="nav-item" onclick="showSection('mods')">Mods</a>
-<a href="#" class="nav-item" onclick="showSection('projects')">Projects</a>
-<a href="https://youtube.com/@FireballMCYT" target="_blank" class="nav-item">YouTube</a>
-<a href="https://reddit.com/r/bagstudios" target="_blank" class="nav-item">Reddit</a>
-<a href="https://solo.to/fireballmcyt" target="_blank" class="nav-item">Socials</a>
-<a href="https://patreon.com/c/FireballMC" target="_blank" class="nav-item">Patreon</a>
-<a href="https://discord.gg/46nx83AyqZ" target="_blank" class="nav-item">Discord</a>
+<a href="#" class="nav-item" onclick="showSection('home');return false;">Home</a>
+<a href="#" class="nav-item" onclick="showSection('statistics');return false;">Statistics</a>
+<a href="#" class="nav-item" onclick="showSection('journey');return false;">Journey to 60</a>
+<a href="#" class="nav-item" onclick="showSection('mods');return false;">Mods</a>
+<a href="#" class="nav-item" onclick="showSection('projects');return false;">Projects</a>
+
+<!-- ADDED: VTL/OER CALCULATOR SIDEBAR BUTTON -->
+<a href="#" class="nav-item" onclick="showSection('vtl-oer');return false;">📊 VTL/OER Calculator</a>
+
+<a href="https://youtube.com/@FireballMCYT" target="_blank" rel="noopener noreferrer" class="nav-item">YouTube</a>
+<a href="https://reddit.com/r/bagstudios" target="_blank" rel="noopener noreferrer" class="nav-item">Reddit</a>
+<a href="https://solo.to/fireballmcyt" target="_blank" rel="noopener noreferrer" class="nav-item">Socials</a>
+<a href="https://patreon.com/c/FireballMC" target="_blank" rel="noopener noreferrer" class="nav-item">Patreon</a>
+<a href="https://discord.gg/46nx83AyqZ" target="_blank" rel="noopener noreferrer" class="nav-item">Discord</a>
 </nav>
+
 <main class="main-content">
 <section id="home" class="section active">
 <div class="hero">
@@ -118,6 +327,7 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 <p>Join the fire nation and become part of our growing community!</p>
 </div>
 </section>
+
 <section id="statistics" class="section">
 <h2 style="text-align:center;margin-bottom:2rem;font-size:2.5rem;color:var(--fire-yellow);">Channel Statistics</h2>
 <div class="charts-container">
@@ -134,15 +344,20 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 </div>
 <div style="text-align:center;margin-top:2rem;"><p>Track our progress as we grow the channel!</p></div>
 </section>
+
 <section id="journey" class="section">
 <div class="journey-content">
 <h2 style="font-size:2.5rem;margin-bottom:2rem;color:var(--fire-yellow);">The Journey to 60</h2>
 <div class="milestone"><h3>🎯 Started Channel</h3><p>Accomplished March 19, 2025</p></div>
 <div class="milestone"><h3>🎬 First Video</h3><p>Accomplished March 19, 2025</p></div>
-<div class="milestone"><h3>📈100 Subscribers</h3><p>Accomplished May 2026</p>
-<a href="https://fireball-j60.pages.dev" target="_blank" class="external-link">Visit the events page!</a>
+<div class="milestone">
+<h3>📈100 Subscribers</h3>
+<p>Accomplished May 2026</p>
+<a href="https://fireball-j60.pages.dev" target="_blank" rel="noopener noreferrer" class="external-link">Visit the events page!</a>
+</div>
 </div>
 </section>
+
 <section id="mods" class="section">
 <h2 class="fire-title">🧪 Fireball MC Mods</h2>
 <div class="mods-grid">
@@ -171,33 +386,146 @@ header{position:fixed;top:0;width:100%;background:rgba(26,26,26,.95);backdrop-fi
 <p class="mod-desc">The 60 subscriber special!</p>
 <a class="mod-dl" href="#">Download</a>
 </div>
+</div>
 </section>
+
 <section id="projects" class="section">
 <h2 class="fire-title">👨‍💻 Projects/Events</h2>
 <div class="projects-timeline">
 </div>
-</div>
 </section>
+
+<!-- ADDED: VTL/OER CALCULATOR PAGE -->
+<section id="vtl-oer" class="section">
+<h2 class="calculator-heading">🔥 VTL/OER Calculator</h2>
+<p class="calculator-subtitle">
+Measure your video's like engagement, overall engagement, and OER Score.
+<br>
+Built for the FireballMC Creator Hub.
+</p>
+
+<div class="calculator-panel">
+<h3>📊 Enter Your Video Statistics</h3>
+
+<form id="vtlOerForm">
+<div class="calculator-fields">
+<div class="calculator-field">
+<label for="vtlViews">Views</label>
+<input id="vtlViews" name="views" type="number" min="1" step="1" placeholder="e.g. 912" required>
+<span class="field-hint">Total video views. Must be at least 1.</span>
+</div>
+
+<div class="calculator-field">
+<label for="vtlLikes">Likes</label>
+<input id="vtlLikes" name="likes" type="number" min="0" step="1" placeholder="e.g. 24" required>
+<span class="field-hint">Total likes. Zero is allowed.</span>
+</div>
+
+<div class="calculator-field">
+<label for="vtlComments">Comments</label>
+<input id="vtlComments" name="comments" type="number" min="0" step="1" placeholder="e.g. 3" required>
+<span class="field-hint">Total comments. Every 2 comments count as 1 weighted like.</span>
+</div>
+
+<div class="calculator-field">
+<label for="vtlTarget">OER Target (%)</label>
+<input id="vtlTarget" name="target" type="number" min="0.000001" step="any" value="10" required>
+<span class="field-hint">Default target: 10%. Used to calculate the score out of 100.</span>
+</div>
+</div>
+
+<div class="calculator-actions">
+<button class="calculate-button" type="submit">🔥 Calculate Results</button>
+<button class="reset-button" type="reset">Reset Inputs</button>
+</div>
+</form>
+
+<div id="vtlCalculatorError" class="calculator-error" role="alert" hidden></div>
+</div>
+
+<div id="vtlCalculatorResults" class="calculator-results" aria-live="polite" hidden>
+<h3 class="results-heading">📈 Your Video Results</h3>
+
+<div class="results-grid">
+<div class="result-card">
+<div class="result-label">VTL Ratio</div>
+<div class="result-value" id="vtlResult">—</div>
+<div class="result-description">Average views per like. Lower is better for like efficiency.</div>
+</div>
+
+<div class="result-card">
+<div class="result-label">Like Engagement</div>
+<div class="result-value" id="engResult">—</div>
+<div class="result-description">Likes divided by views, multiplied by 100.</div>
+</div>
+
+<div class="result-card">
+<div class="result-label">Overall Engagement</div>
+<div class="result-value" id="oerResult">—</div>
+<div class="result-description">Likes plus half the comments, divided by views.</div>
+</div>
+
+<div class="result-card">
+<div class="result-label">OER Score</div>
+<div class="result-value" id="oerScoreResult">—</div>
+<div class="result-description">Your OER compared with the selected target.</div>
+</div>
+
+<div class="result-card">
+<div class="result-label">Weighted Engagement</div>
+<div class="result-value" id="weightedResult">—</div>
+<div class="result-description">Likes + (comments ÷ 2).</div>
+</div>
+</div>
+
+<div class="score-panel">
+<h3>OER Target Progress</h3>
+<p id="scoreProgressText">Calculate your video to see target progress.</p>
+<div class="score-track">
+<div id="oerScoreBar" class="score-track-fill"></div>
+</div>
+<p id="scoreExplanation" class="score-explanation"></p>
+</div>
+</div>
+
+<p class="calculator-footnote">
+VTL is undefined when a video has zero likes. OER Score is capped at 100/100.
+The default 10% target is a customizable benchmark for this calculator, not a universal industry standard.
+</p>
+</section>
+<!-- END ADDED VTL/OER CALCULATOR PAGE -->
+
 </main>
+
 <script>
 const API_KEY='AIzaSyDMf_dA53j07Jr76SwIBhGPwAo_ISWYgRE';
 const CHANNEL_ID='UCG2Amy2r9zcApNwAumUWmSQ';
+
 function createFireParticles(){
 const fb=document.getElementById('fireBg');
 for(let i=0;i<50;i++){
-const p=document.createElement('div');p.className='fire-particle';
-p.style.left=Math.random()*100+'%';p.style.animationDelay=Math.random()*3+'s';
-p.style.animationDuration=(Math.random()*3+2)+'s';fb.appendChild(p);
+const p=document.createElement('div');
+p.className='fire-particle';
+p.style.left=Math.random()*100+'%';
+p.style.animationDelay=Math.random()*3+'s';
+p.style.animationDuration=(Math.random()*3+2)+'s';
+fb.appendChild(p);
 }
 }
+
 function toggleSidebar(){
 document.getElementById('sidebar').classList.toggle('active');
 }
+
 function showSection(id){
+const target=document.getElementById(id);
+if(!target)return;
+
 document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-setTimeout(()=>{document.getElementById(id)?.classList.add('active');},100);
-toggleSidebar();
+setTimeout(()=>{target.classList.add('active');},100);
+document.getElementById('sidebar').classList.remove('active');
 }
+
 async function fetchYouTubeStats(){
 if(API_KEY==='YOUR_YOUTUBE_API_KEY'||CHANNEL_ID==='YOUR_CHANNEL_ID'){
 document.getElementById('subCount').textContent='45';
@@ -220,13 +548,158 @@ document.getElementById('viewProgress').style.width=Math.min((parseInt(s.viewCou
 }
 }catch(e){console.error(e);}
 }
-document.addEventListener('DOMContentLoaded',()=>{
-createFireParticles();fetchYouTubeStats();setInterval(fetchYouTubeStats,300000);
+
+/* ADDED: VTL/OER CALCULATOR LOGIC */
+function calculateVtlOer(views,likes,comments,target=10){
+const values=[views,likes,comments];
+
+if(!values.every(Number.isSafeInteger)){
+throw new Error('Views, likes, and comments must be whole numbers.');
+}
+if(views<=0){
+throw new Error('Views must be greater than 0.');
+}
+if(likes<0||comments<0){
+throw new Error('Likes and comments cannot be negative.');
+}
+if(likes>views){
+throw new Error('Likes cannot exceed views.');
+}
+if(!Number.isFinite(target)||target<=0){
+throw new Error('OER target must be a positive number.');
+}
+
+const vtl=likes>0?views/likes:null;
+const engagement=(likes/views)*100;
+const weightedEngagement=likes+comments/2;
+const oerPercent=(weightedEngagement/views)*100;
+const oerScore=Math.min(100,(oerPercent/target)*100);
+
+return{
+VTL:vtl,
+ENG:engagement,
+OER:oerPercent,
+OERScore:oerScore,
+WeightedEngagement:weightedEngagement,
+Target:target
+};
+}
+
+function formatCalculatorNumber(value,maximumFractionDigits=2){
+return value.toLocaleString('en-US',{
+maximumFractionDigits,
+minimumFractionDigits:2
 });
+}
+
+function runVtlOerCalculator(event){
+event.preventDefault();
+
+const errorBox=document.getElementById('vtlCalculatorError');
+const resultsBox=document.getElementById('vtlCalculatorResults');
+
+errorBox.hidden=true;
+errorBox.textContent='';
+
+try{
+const viewsInput=document.getElementById('vtlViews');
+const likesInput=document.getElementById('vtlLikes');
+const commentsInput=document.getElementById('vtlComments');
+const targetInput=document.getElementById('vtlTarget');
+
+const viewsText=viewsInput.value.trim();
+const likesText=likesInput.value.trim();
+const commentsText=commentsInput.value.trim();
+const targetText=targetInput.value.trim();
+
+if(!viewsText||!likesText||!commentsText||!targetText){
+throw new Error('Please fill in all four input fields.');
+}
+
+const views=Number(viewsText);
+const likes=Number(likesText);
+const comments=Number(commentsText);
+const target=Number(targetText);
+
+const results=calculateVtlOer(views,likes,comments,target);
+
+document.getElementById('vtlResult').textContent=
+results.VTL===null?'Undefined':formatCalculatorNumber(results.VTL);
+
+document.getElementById('engResult').textContent=
+formatCalculatorNumber(results.ENG)+'%';
+
+document.getElementById('oerResult').textContent=
+formatCalculatorNumber(results.OER)+'%';
+
+document.getElementById('oerScoreResult').textContent=
+formatCalculatorNumber(results.OERScore,1)+'/100';
+
+document.getElementById('weightedResult').textContent=
+formatCalculatorNumber(results.WeightedEngagement);
+
+const scoreBar=document.getElementById('oerScoreBar');
+scoreBar.style.width=Math.min(results.OERScore,100)+'%';
+
+document.getElementById('scoreProgressText').textContent=
+`OER: ${formatCalculatorNumber(results.OER)}% | Target: ${formatCalculatorNumber(results.Target)}%`;
+
+const scoreExplanation=document.getElementById('scoreExplanation');
+
+if(results.OERScore>=100){
+scoreExplanation.textContent=
+'You reached or exceeded your selected OER target! Your score is capped at 100/100.';
+}else{
+const remaining=results.Target-results.OER;
+scoreExplanation.textContent=
+`You reached ${formatCalculatorNumber(results.OERScore,1)}% of your selected OER target. You need ${formatCalculatorNumber(Math.max(0,remaining))} more percentage points of OER to reach that target.`;
+}
+
+resultsBox.hidden=false;
+
+}catch(error){
+resultsBox.hidden=true;
+errorBox.textContent=error.message||'Something went wrong while calculating your results.';
+errorBox.hidden=false;
+}
+}
+
+function resetVtlOerCalculator(){
+document.getElementById('vtlCalculatorError').hidden=true;
+document.getElementById('vtlCalculatorError').textContent='';
+document.getElementById('vtlCalculatorResults').hidden=true;
+document.getElementById('vtlResult').textContent='—';
+document.getElementById('engResult').textContent='—';
+document.getElementById('oerResult').textContent='—';
+document.getElementById('oerScoreResult').textContent='—';
+document.getElementById('weightedResult').textContent='—';
+document.getElementById('oerScoreBar').style.width='0%';
+document.getElementById('scoreProgressText').textContent=
+'Calculate your video to see target progress.';
+document.getElementById('scoreExplanation').textContent='';
+}
+/* END ADDED VTL/OER CALCULATOR LOGIC */
+
+document.addEventListener('DOMContentLoaded',()=>{
+createFireParticles();
+fetchYouTubeStats();
+setInterval(fetchYouTubeStats,300000);
+
+/* ADDED: CALCULATOR EVENT LISTENERS */
+document.getElementById('vtlOerForm').addEventListener('submit',runVtlOerCalculator);
+document.getElementById('vtlOerForm').addEventListener('reset',()=>{
+setTimeout(resetVtlOerCalculator,0);
+});
+/* END ADDED EVENT LISTENERS */
+});
+
 document.addEventListener('click',e=>{
 const sb=document.getElementById('sidebar');
-if(!sb.contains(e.target)&&!e.target.closest('.menu-toggle'))sb.classList.remove('active');
+if(!sb.contains(e.target)&&!e.target.closest('.menu-toggle')){
+sb.classList.remove('active');
+}
 });
 </script>
 </body>
 </html>
+```
